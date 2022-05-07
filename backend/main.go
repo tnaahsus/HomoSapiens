@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	envFile := "../.env"
-	configFile := "../config.json"
+	envFile := "./.env"
+	configFile := "./config.json"
 	args := os.Args
 	if len(args) > 2 {
 		envFile = args[1]

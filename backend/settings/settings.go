@@ -13,6 +13,6 @@ func InitializeSettings() {
 
 	// Database Configurations
 	ConnectionConfig = os.Getenv("CONNECTION_CONFIG")
-	Host = os.Getenv("HOST")
+	Host = os.Getenv("ALLOWED_HOST")
 
 }

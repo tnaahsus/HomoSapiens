@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  database:
+    container_name: 'database'
+    build:
+      context: cockroach
+    volumes:
+      - homosapiens-data:/cockroach/cockroach-data
+    restart: always
+
+  backend:
+    container_name: 'backend'
+    build:
+      context: backend
+    depends_on:
+      - database
+    restart: always
+
+  frontend:
+    container_name: 'blog-section'
+    build:
+      context: frontend/blog-section
+    depends_on:
+      - backend
+    volumes:
+      - react_build:/frontend/blog-section/build
+
+  admin:
+    container_name: 'admin'
+    build:
+      context: frontend/admin
+    depends_on:
+      - backend
+    volumes:
+      - admin_build:/frontend/admin/build
+
+
+  nginx:
+    container_name: 'nginx'
+    image: nginx:1.21.5-alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+    environment:
+      - HOST=${HOST}
+      - BACKEND_LOCATION=${BACKEND_LOCATION}
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/default.conf
+      - ./nginx/subs.sh:/subs.sh
+      - react_build:/usr/share/nginx/html/
+      - admin_build:/usr/share/nginx/html/admin
+    command: "/bin/sh -c 'chmod +x ./subs.sh; ./subs.sh; nginx -g \"daemon off;\"'"
+    restart: always
+
+
+volumes:
+  react_build:
+  admin_build:
+  homosapiens-data:

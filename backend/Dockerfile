@@ -10,8 +10,6 @@ RUN go mod download
 
 RUN go build .
 
-EXPOSE 9000
-
 FROM alpine:3.15
 
 RUN mkdir -p src/.cockroach && chmod -R 777 /src
@@ -20,4 +18,10 @@ WORKDIR src
 
 COPY --from=exe-build /go/backend/blog-site .
 
-CMD ["./blog-site", "0.0.0.0", "9000"]
+COPY --from=exe-build /go/backend/.env .
+
+COPY --from=exe-build /go/backend/config.json .
+
+EXPOSE 9000
+
+CMD ["./blog-site"]

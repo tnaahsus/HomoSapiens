@@ -1,6 +1,3 @@
-.env
 blog-site.exe
-test.txt
 Dockerfile
 .dockerignore
-.cockroach

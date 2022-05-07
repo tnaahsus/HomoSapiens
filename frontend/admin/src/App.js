@@ -120,7 +120,7 @@ const App = () => {
       .post(
         value
           ? "https://blogs.pbl.asia/api/add/article"
-          : "http://localhost:9000/api/add/article",
+          : "http://localhost/api/add/article",
         {
           title: title,
           body: body,

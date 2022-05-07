@@ -2,6 +2,6 @@
 .Dockerfile
 .dockerignore
 node_modules
-package_lock.json
 Dockerfile
+README.md
 build
